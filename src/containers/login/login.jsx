@@ -1,4 +1,6 @@
 import React,{Component} from "react";
+import { connect } from "react-redux";
+import {test1Action,test2Action} from '../../reduxs/actions/login_action'
 import logo from "./imgs/logo.png";
 import "./css/login.css";
 import {Form,Icon,Input,Button } from 'antd';
@@ -20,7 +22,7 @@ class Login extends Component{
       <div className="login">
         <header>
           <img src={logo} alt="logo" />
-          <h1>商品管理系统</h1>
+          <h1>商品管理系统{this.props.state}</h1>
         </header>
         <section>
           <h1>用户登录</h1>
@@ -62,4 +64,10 @@ class Login extends Component{
   }
 }
 
-export default Form.create()(Login);
+ export default connect(
+  state =>({user:state}),
+  {
+    text1:test1Action,
+    text2:test2Action
+  }
+)(Form.create()(Login))
