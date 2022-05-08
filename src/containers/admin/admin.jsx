@@ -6,7 +6,7 @@ class Admin extends Component{
   render(){
     return (
       <div>
-        当前为admin页面,你的用户名为{this.props.state}
+        当前为admin页面,你的用户名为
       </div>
     )
   }

@@ -3,6 +3,6 @@ import adminReducer from './admin_reducer'
 import {combineReducers} from 'redux'
 
  export default combineReducers({
-  text:loginReducer,
+  test:loginReducer,
   demo:adminReducer
 })

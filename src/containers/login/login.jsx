@@ -16,20 +16,39 @@ class Login extends Component{
       }
     });
   };
+  //密码验证
+  pswVerify = (rule, value, callback)=>{
+     if(!value){
+       callback('密码必须输入!')
+     }else if(value.length<4){
+       callback('密码必须小于4位')
+     }else if(value.length>12){
+       callback('密码不能大于12位')
+     }else if(!/^\w+$/.test(value)){
+       callback('密码必须是数字字母下划线')
+     }else{
+       callback()
+     }
+  }
   render(){
     const { getFieldDecorator } = this.props.form;
     return (
       <div className="login">
         <header>
           <img src={logo} alt="logo" />
-          <h1>商品管理系统{this.props.state}</h1>
+          <h1>商品管理系统</h1>
         </header>
         <section>
           <h1>用户登录</h1>
           <Form onSubmit={this.handleSubmit} className="login-form">
            <Item>
              {getFieldDecorator('username', {
-               rules: [{ required: true, message: 'Please input your username!' }],
+               rules: [
+                 { required: true, message: '用户名必须输入' },
+                 {max:12,message:'用户名最多为12位'},
+                 {min:4,message:'用户名做少为4位'},
+                 {pattern:/^\w+$/,message:'用户名必须是数字字母下划线'}
+                ],
              })(
                <Input
                  prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -39,7 +58,7 @@ class Login extends Component{
            </Item>
            <Item>
              {getFieldDecorator('password', {
-               rules: [{ required: true, message: 'Please input your Password!' }],
+               rules: [{validator:this.pswVerify}],
              })(
                <Input
                  prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />}
@@ -49,10 +68,6 @@ class Login extends Component{
              )}
            </Item>
            <Item>
-             {getFieldDecorator('remember', {
-               valuePropName: 'checked',
-               initialValue: true,
-             })()}
              <Button type="primary" htmlType="submit" className="login-form-button">
                登录
              </Button>
@@ -71,3 +86,4 @@ class Login extends Component{
     text2:test2Action
   }
 )(Form.create()(Login))
+

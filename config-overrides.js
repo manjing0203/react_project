@@ -1,4 +1,4 @@
- const { override, fixBabelImports, addLessLoader } = require('customize-cra');
+const { override, fixBabelImports, addLessLoader,adjustStyleLoaders } = require('customize-cra');
 
 module.exports = override(
   fixBabelImports('import', {
@@ -11,5 +11,10 @@ module.exports = override(
     javascriptEnabled: true,
     modifyVars: { '@primary-color': '#1DA57A' },
     },
+  }),
+  //解决postcss-loader报错问题
+  adjustStyleLoaders(({ use: [, , postcss] }) => {
+    const postcssOptions = postcss.options;
+    postcss.options = { postcssOptions };
   }),
 );
