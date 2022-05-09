@@ -1,18 +1,34 @@
 import React,{Component} from "react";
 import { connect } from "react-redux";
-import {test1Action,test2Action} from '../../reduxs/actions/login_action'
+import { Redirect } from "react-router-dom";
+import {createSaveUserInfo} from '../../reduxs/actions/login_action'
 import logo from "./imgs/logo.png";
 import "./css/login.css";
-import {Form,Icon,Input,Button } from 'antd';
+import {Form,Icon,Input,Button, message } from 'antd';
+import loginReq from "../../api";
 const {Item} = Form;
 
 class Login extends Component{
   //登录提交信息,发送请求
   handleSubmit = e => {
     e.preventDefault();
-    this.props.form.validateFields((err, values) => {
+    this.props.form.validateFields(async(err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
+        //发送axioa请求
+        let result = await loginReq(values)
+        let {status,msg} = result;
+        //axios请求成功后,判断用户名和密码是否与数据库匹配
+        if(status === 0){
+          //点击登录把状态保存到store中
+          this.props.saveUserInfo(result.data)
+          //跳转admin页面
+           this.props.history.replace('/admin')
+        }else{
+          message.warning(msg)
+        }
+        console.log(result)
+      }else{
+        console.log(message.error('表单有误,请重新输入'))
       }
     });
   };
@@ -30,8 +46,12 @@ class Login extends Component{
        callback()
      }
   }
+  
   render(){
     const { getFieldDecorator } = this.props.form;
+    if(this.props.user.isLogin){
+      return <Redirect to="/admin"/>
+    }
     return (
       <div className="login">
         <header>
@@ -80,10 +100,9 @@ class Login extends Component{
 }
 
  export default connect(
-  state =>({user:state}),
+  state =>({user:state.userInfo}),
   {
-    text1:test1Action,
-    text2:test2Action
+   saveUserInfo:createSaveUserInfo
   }
 )(Form.create()(Login))
 

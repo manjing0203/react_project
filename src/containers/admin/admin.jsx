@@ -1,21 +1,30 @@
 import React,{Component} from "react";
 import { connect } from "react-redux";
-import {demo1Action,demo2Action} from '../../reduxs/actions/admin_action'
+import { Redirect } from "react-router-dom";
+import {createdeleteUserInfo} from '../../reduxs/actions/login_action'
 
 class Admin extends Component{
+  lgout = ()=>{
+    this.props.deleteUserInfo()
+  }
   render(){
-    return (
-      <div>
-        当前为admin页面,你的用户名为
-      </div>
-    )
+    if(this.props.userInfo.isLogin){
+      return (
+        <div>
+          当前为admin页面,你的用户名为{this.props.userInfo.user.username}<br/>
+          <button onClick={this.lgout}>退出登录</button>
+        </div>
+      )
+    }else{
+      return <Redirect to="/login"/>
+    }
+    
   }
 }
 
 export default connect(
-  state =>({user:state}),
+  state =>({userInfo:state.userInfo}),
   {
-    demo1:demo1Action,
-    demo2:demo2Action
+    deleteUserInfo:createdeleteUserInfo
   }
 )(Admin)

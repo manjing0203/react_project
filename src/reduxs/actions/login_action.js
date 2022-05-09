@@ -1,4 +1,14 @@
-import { TEST1,TEST2 } from "../actions_type";
- const test1Action = value=>({type:TEST1,data:value});
- const test2Action = value=>({type:TEST2,data:value});
- export {test1Action,test2Action}
+import { SAVEUSERINFO,CREATEDELETEUSERINFO } from "../actions_type";
+
+ const createSaveUserInfo = value=>{
+  localStorage.setItem('user',JSON.stringify(value.user));
+  localStorage.setItem('token',value.token)
+  return {type:SAVEUSERINFO,data:value}
+ }
+ const createdeleteUserInfo = ()=>{
+  localStorage.removeItem('user');
+  localStorage.removeItem('token')
+  return {type:CREATEDELETEUSERINFO}
+};
+ 
+ export {createSaveUserInfo,createdeleteUserInfo}
