@@ -1,0 +1,48 @@
+.header{
+  color: #000;
+  height: 80px;
+  background-color: #fff;
+  .header-top{
+    height: 40px;
+    border-bottom: 1px solid #1DA57A;
+    text-align: right;
+    line-height: 40px;
+    .btn-screen{
+      margin-right: 10px;
+    }
+    .btn-lgout{
+      margin-right: 20px;
+    }
+  }
+  .header-bottom{
+    display: flex;
+    line-height: 40px;
+    .title{
+      position: relative;
+      width: 25%;
+      text-align: center;
+      font-size: 24px;
+      &::after{
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: -38px;
+        content: '';
+        border-top: 20px solid rgb(255, 255, 255);
+        border-right: 20px solid transparent;
+        border-bottom: 20px solid transparent;
+        border-left: 20px solid transparent;
+      }
+    }
+    .data-info{
+      text-align: right;
+      width: 75%;
+      .temp{
+        margin-right: 20px;
+      }
+      .weather{
+        margin: 0 10px;
+      }
+    }
+  }
+}

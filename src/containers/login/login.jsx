@@ -2,12 +2,19 @@ import React,{Component} from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
 import {createSaveUserInfo} from '../../reduxs/actions/login_action'
-import logo from "./imgs/logo.png";
-import "./css/login.css";
+import logo from "../../staic/imgs/logo.png";
+import './css/login.css';
 import {Form,Icon,Input,Button, message } from 'antd';
-import loginReq from "../../api";
+import {loginReq} from "../../api";
 const {Item} = Form;
 
+@connect(
+  state =>({user:state.userInfo}),
+  {
+   saveUserInfo:createSaveUserInfo
+  }
+)
+@Form.create()
 class Login extends Component{
   //登录提交信息,发送请求
   handleSubmit = e => {
@@ -22,7 +29,7 @@ class Login extends Component{
           //点击登录把状态保存到store中
           this.props.saveUserInfo(result.data)
           //跳转admin页面
-           this.props.history.replace('/admin')
+           this.props.history.replace('/admin/home')
         }else{
           message.warning(msg)
         }
@@ -99,10 +106,5 @@ class Login extends Component{
   }
 }
 
- export default connect(
-  state =>({user:state.userInfo}),
-  {
-   saveUserInfo:createSaveUserInfo
-  }
-)(Form.create()(Login))
+ export default Login;
 

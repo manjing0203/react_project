@@ -1,4 +1,4 @@
-const { override, fixBabelImports, addLessLoader,adjustStyleLoaders } = require('customize-cra');
+const { override, fixBabelImports, addLessLoader,adjustStyleLoaders,addDecoratorsLegacy } = require('customize-cra');
 
 module.exports = override(
   fixBabelImports('import', {
@@ -17,4 +17,5 @@ module.exports = override(
     const postcssOptions = postcss.options;
     postcss.options = { postcssOptions };
   }),
+  addDecoratorsLegacy()
 );

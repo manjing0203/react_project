@@ -1,0 +1,14 @@
+.top {
+  font-size: 20px;
+}
+.list-item {
+  justify-content: flex-start;
+}
+.list-item .list-title {
+  font-size: 20px;
+  margin-right: 20px;
+  font-weight: bold;
+}
+.list-item .detail {
+  display: inline-block;
+}
