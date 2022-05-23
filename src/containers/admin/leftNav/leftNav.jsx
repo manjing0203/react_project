@@ -7,15 +7,31 @@ import {createSaveTitleAction} from '../../../reduxs/actions/leftNav_action'
 const { SubMenu,Item } = Menu;
 
 @connect(
-  state =>({}),
+  state =>({
+    menus:state.userInfo.user.role.menus,
+    username:state.userInfo.user.username
+  }),
   {
     saveTitle:createSaveTitleAction
   }
 )
 @withRouter
 class LeftNav extends Component {
+
+  hasAuth = (item) =>{
+    let {menus,username} = this.props
+    if(username === 'admin') return true
+    else if(!item.children){
+     return menus.indexOf(item.key) !== -1
+    }else if(item.children){
+     return item.children.some((child)=>{
+        return menus.indexOf(child.key) !== -1
+      })
+    }
+  }
   createMenu = (target)=>{
     return target.map((item)=>{
+       if(this.hasAuth(item)){
        if(!item.children){
          return (
           <Item key={item.key} onClick={()=>{this.props.saveTitle(item.title)}}>
@@ -26,7 +42,7 @@ class LeftNav extends Component {
           </Item>
          )
        }else{
-         return(
+        return(
           <SubMenu
             key={item.key}
             title={
@@ -40,6 +56,7 @@ class LeftNav extends Component {
           </SubMenu>
          )
        }
+      }
      })
   }
   render() {
@@ -51,7 +68,6 @@ class LeftNav extends Component {
           defaultOpenKeys={pathname.split('/').splice(2)}
           mode="inline"
           theme="dark"
-          //inlineCollapsed={this.state.collapsed}
         >
          {this.createMenu(menuList)}
         </Menu>

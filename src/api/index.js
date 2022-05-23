@@ -36,5 +36,20 @@ export const prodInfoByIdReq = (productId)=>myAxios.get('/manage/product/info',{
 //删除图片
 export const detelePicReq = (name) =>  myAxios.post('/manage/img/delete',{name})
 //添加商品
-export const addProductReq = (productObj) =>myAxios.post('/manage/product/add',productObj)
-
+export const addProductReq = (productObj) => myAxios.post('/manage/product/add',{...productObj})
+//修改商品
+export const operaProductReq = (productObj) =>myAxios.post('/manage/product/update',{...productObj})
+//所有角色列表
+export const roleListReq = (pageNum, pageSize)=>myAxios.get('/manage/role/list',{params:{pageNum, pageSize}})
+//添加角色
+export const addRoleReq = (values)=>myAxios.post('/manage/role/add',values)
+//更新角色权限
+export const updateRoleReq = (roleObj)=>myAxios.post('/manage/role/update',roleObj)
+//获取用户列表
+export const userListReq = ()=>myAxios.get('/manage/user/list')
+//添加用户
+export const addUserReq = (values)=>myAxios.post('/manage/user/add',values)
+//更新用户
+export const updateUserReq = ({_id,username,phone,email,role_id})=>myAxios.post('/manage/user/update',{_id,username,phone,email,role_id})
+//删除用户
+export const deleteUserReq = (userId)=>myAxios.post('/manage/user/delete',{userId})

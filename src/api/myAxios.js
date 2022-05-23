@@ -1,6 +1,7 @@
 import axios from "axios";
 import { message } from "antd";
 import NProgress from 'nprogress';
+import qs from 'qs'
 import store from '../reduxs/store';
 import {createdeleteUserInfo} from '../reduxs/actions/login_action'
 import 'nprogress/nprogress.css'
@@ -17,6 +18,12 @@ instance.interceptors.request.use(function (config) {
   if(method.toLowerCase() === 'post'){
     if(data instanceof Object){
       config.data = new URLSearchParams(data)
+    //当参数中有数组时
+   for(let i in data){
+    if(data[i] instanceof Array){
+      config.data = qs.stringify(data,{arrayFormat:'indices'})
+    }
+  }
     }
   }
   return config;

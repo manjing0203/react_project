@@ -4,14 +4,13 @@ import { Editor, Toolbar } from '@wangeditor/editor-for-react'
 
 function MyEditor(props, ref) {
     const [editor, setEditor] = useState(null) // 存储 editor 实例
-    const [html, setHtml] = useState('<p>hello</p>')
+    const [html, setHtml] = useState('')
 
     // 模拟 ajax 请求，异步设置 html
+
     useEffect(() => {
-        setTimeout(() => {
-            setHtml('<p></p>\n')
-        }, 1500)
-    }, [])
+            setHtml(props.detail)
+    },[props.detail,setHtml])
 
     const toolbarConfig = { }
     const editorConfig = {

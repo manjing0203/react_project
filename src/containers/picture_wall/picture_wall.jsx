@@ -40,6 +40,8 @@ export default class PicturesWall extends Component {
     if(file.status === 'done'){
       fileList[fileList.length-1].url = file.response.data.url
       fileList[fileList.length-1].name = file.response.data.name
+      console.log(file)
+      console.log(fileList)
     }
     //在服务器中删除图片
     if(file.status ==='removed'){
@@ -58,6 +60,14 @@ export default class PicturesWall extends Component {
       imgs.push(item.name)
     })
     return imgs
+  }
+  //设置filelist
+  setFileList = (imgArr)=>{
+    let fileList = []
+    imgArr.forEach((item,index)=>{
+      fileList.push({uid:-index,name:item,url:`${BASE_URL}/upload/${item}`})
+    })
+    this.setState({ fileList });
   }
 
   render() {

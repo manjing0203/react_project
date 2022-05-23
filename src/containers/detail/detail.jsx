@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import {Button,Card,Icon,List, message} from 'antd'
 import { connect } from "react-redux";
 import {prodInfoByIdReq,categoryListReq} from '../../api'
+import {BASE_URL} from '../../config/config'
 import './detail.less'
 const {Item} = List
 
@@ -114,7 +115,7 @@ class Detail extends Component {
                   <span className='list-title'>商品图片:</span>
                     {
                         imgs.map((item,index)=>{
-                          return <img key={index} src={`/upload/`+ item} alt="商品图片" />
+                          return <img key={index} src={`${BASE_URL}/upload/${item}`} alt="商品图片" />
                         })
                     }
                 </Item>
